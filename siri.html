@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtuele assistent</title>
+    <link rel="shortcut icon" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Mono", monospace;
+}
+
+.main {
+  min-height: 100vh;
+  position: relative;
+  width: 100%;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.main .image-container {
+  padding: 10px;
+}
+
+.main .image-container .image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main .image-container .image img {
+  width: 350px;
+  align-items: center;
+}
+
+
+.main .image-container h1 {
+  color: #00bcd4;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 40px;
+}
+
+.main .image-container p {
+  color: #324042;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.main .input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40vw;
+  height: 50px;
+  border-radius: 20px;
+  background: rgb(202 253 255 / 50%);
+}
+
+.main .input .talk {
+  background: transparent;
+  outline: none;
+  border: none;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.main .input .talk i {
+  font-size: 20px;
+  color: #aed0d0;
+}
+
+.main .input .content {
+  color: #aed0d0;
+  font-size: 15px;
+  margin-right: 20px;
+}
+    </style>
+
+</head>
+
+<body>
+    <section class="main">
+        <div class="image-container">
+            <div class="image">
+                <img src="logo.gif" alt="image">
+            </div>
+            <h1>Assistant</h1>
+            <p>I'm a Virtual Assistant, How may I help you?</p>
+        </div>
+        <div class="input">
+          <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
+          <div id="responseBox" contenteditable="true"></div>
+        </div>
+    </section>
+
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+ 
+      <script>
+          let recognition = null;
+          let listening = false;
+          let audioContext;
+          let stream;
+        const maxListenDuration = 5000; // Maximum duration to listen in milliseconds
+
+        function startListening() {
+            recognition = new webkitSpeechRecognition();
+            recognition.continuous = false; // Set continuous to false
+            recognition.onresult = handleSpeech;
+            recognition.start(); // Start listening
+
+            // Stop listening after a set duration
+            setTimeout(stopListening, maxListenDuration);
+        }
+
+        function stopListening() {
+            if (recognition) {
+                recognition.stop(); // Stop listening
+                startListening(); // Restart listening
+            }
+        }
+
+        function handleSpeech(event) {
+            const result = event.results[event.results.length - 1];
+            const transcript = result[0].transcript.toLowerCase();
+
+            document.getElementById('responseBox').innerText = transcript;
+
+            if (transcript.includes('open youtube')) {
+                openYouTube();
+            } else if (transcript.includes('hey google')) {
+                const query = transcript.replace('hey google', '').trim();
+                searchGoogle(query);
+            } else if (transcript.includes('hey spotify')) {
+                openSpotify();
+            }else if (transcript.includes('hey assistant')) {
+              naam();
+             }
+            }
+
+            function naam() {
+              // Use ResponsiveVoice for speech synthesis
+              responsiveVoice.speak("mhmmmmmmmmm", "UK English Male",);
+          }
+
+        function openYouTube() {
+            // Use ResponsiveVoice for speech synthesis
+            responsiveVoice.speak("Okay, I'm opening YouTube.", "UK English Male", { onend: openYouTubeTab });
+        }
+
+        function openYouTubeTab() {
+            // Open YouTube in a new tab
+            window.open('https://www.youtube.com', '_blank');
+        }
+
+        function openSpotify() {
+            // Replace this with code to open the Spotify app
+            responsiveVoice.speak("Okay, I'm opening Spotify.", "UK English Male");
+            window.location.href = "spotify://";
+        }
+
+        function searchGoogle(query) {
+            const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+            responsiveVoice.speak("I'm searching Google for " + query, "UK English Male", { onend: () => window.open(url, '_blank') });
+        }
+
+        // Start listening when the page loads
+        startListening();
+    </script>
+</body>
+</html>
