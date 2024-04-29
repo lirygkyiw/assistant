@@ -91,12 +91,15 @@
   font-size: 15px;
   margin-right: 20px;
 }
-    </style>
+.a {
+  color: rgba(255, 255, 255, 0.300);
+}
 
+    </style>
 </head>
 
 <body>
-    <section class="main">
+    <section class="main"> <br><br> <br>
         <div class="image-container">
             <div class="image">
                 <img src="logo.gif" alt="image">
@@ -105,10 +108,16 @@
             <p>I'm a Virtual Assistant, How may I help you?</p>
         </div>
         <div class="input">
-          <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> 
+          <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br> <br>
           <div id="responseBox" contenteditable="true"></div>
         </div>
+        <br> <br><br><br>
+        <h6 class="a">hey google to search with google</h6>
+        <h6 class="a">hey spotify to listen to spotify</h6>
+        <h6 class="a">hey assistant and it will listen</h6>
+        <h6 class="a">hey youtube to watch youtube</h6>
     </section>
+
 
     <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
  
@@ -147,7 +156,7 @@
             } else if (transcript.includes('hey google')) {
                 const query = transcript.replace('hey google', '').trim();
                 searchGoogle(query);
-            } else if (transcript.includes('hey spotify')) {
+            } else if (transcript.includes('open spotify')) {
                 openSpotify();
             }else if (transcript.includes('hey assistant')) {
               naam();
@@ -185,3 +194,4 @@
     </script>
 </body>
 </html>
+
