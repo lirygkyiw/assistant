@@ -126,7 +126,7 @@
           let listening = false;
           let audioContext;
           let stream;
-        const maxListenDuration = 3000; // Maximum duration to listen in milliseconds
+          const maxListenDuration = 60000; // Set the maximum duration to 1 minute (60000 milliseconds)
 
         function startListening() {
             recognition = new webkitSpeechRecognition();
